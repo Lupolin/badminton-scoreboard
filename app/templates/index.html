@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block body %}
+
+<div class="app grid">
+  {# 舞台：只有 score 模式顯示；其它模式先放一個隱藏區，方便 HTMX 更新 #}
+  <section
+    class="card left"
+    {%
+    if
+    mode
+    !="score"
+    %}style="display:none"
+    {%
+    endif
+    %}
+  >
+    <header><h2>賽程舞台</h2></header>
+    <div class="body">
+      <div id="stage" class="stage">
+        {% if mode=='score' %}{% include "_stage.html" %}{% endif %}
+      </div>
+    </div>
+  </section>
+  {% if mode != 'score' %}
+  <div id="stage" style="display: none"></div>
+  {% endif %} {# 右側變單欄：名單 或 清單 #}
+  <section class="card right">
+    <header><h2>名單 / 清單</h2></header>
+    <div class="body" id="panel">
+      {% if mode == 'list' %}
+      <div class="section">
+        <strong>賽程清單</strong>
+        {% set matches = matches or [] %} {% if matches %}
+        <ol style="margin: 8px 0 0 18px; padding: 0; line-height: 1.9">
+          {% for m in matches %}
+          <li>{{ m.left|join(' + ') }} vs {{ m.right|join(' + ') }}</li>
+          {% endfor %}
+        </ol>
+        {% else %}
+        <em>尚未產生賽程</em>
+        {% endif %}
+      </div>
+      {% else %}
+      <div class="section">
+        <form id="rosterForm">
+          <div class="chips">
+            {% for n in roster %}
+            <label class="chip">
+              <input
+                type="checkbox"
+                name="names"
+                value="{{ n }}"
+                {%
+                if
+                n
+                in
+                checked
+                %}checked{%
+                endif
+                %}
+              />
+              {{ n }}
+            </label>
+            {% endfor %}
+          </div>
+        </form>
+        <div class="row" style="margin-top: 8px">
+          <!-- 直接導向 /score：產生完自動進入計分頁 -->
+          <button
+            class="btn primary"
+            hx-post="/generate"
+            hx-include="#rosterForm"
+          >
+            產生賽程（套用規則）
+          </button>
+        </div>
+        <div class="hint" style="margin-top: 6px">
+          若未勾任何人，系統會以 DB reply='要' 的人為名單。會依人數自動產生 M
+          場（4→12、5→20、6→18、7→21、8→20）。
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

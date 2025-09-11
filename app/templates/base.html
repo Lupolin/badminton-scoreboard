@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{{ title or "羽球賽程" }}</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+
+<body class="{% if mode=='score' %}score-mode{% endif %}">
+  {% block body %}{% endblock %}
+
+  <!-- 手機底部分頁：只顯示「另外兩個」 -->
+  <nav class="mobile-tabs" id="mobile-tabs">
+    {% set m = mode or 'setup' %} {% if m == 'setup' %}
+    <a href="/list">清單</a>
+    <a href="/score">計分</a>
+    {% elif m == 'list' %}
+    <a href="/">名單</a>
+    <a href="/score">計分</a>
+    {% else %}
+    <a href="/">名單</a>
+    <a href="/list">清單</a>
+    {% endif %}
+  </nav>
+
+  <!-- 數字：點左半減、右半加（一次載入即可） -->
+  <script>
+    (function () {
+      function bindTap(root) {
+        root.querySelectorAll(".tap-score").forEach(function (el) {
+          if (el.dataset.bound === "1") return;
+          el.dataset.bound = "1";
+          el.addEventListener(
+            "click",
+            function (ev) {
+              const rect = el.getBoundingClientRect();
+              const x =
+                (ev.clientX ??
+                  (ev.touches && ev.touches[0] && ev.touches[0].clientX) ??
+                  0) - rect.left;
+              const side = x < rect.width / 2 ? "minus" : "plus";
+              const which = `${el.dataset.team}_${side}`; // left_minus/right_plus...
+              htmx.ajax("POST", "/score", {
+                values: { which },
+                target: "#stage",
+                swap: "innerHTML",
+              });
+            },
+            { passive: true }
+          );
+        });
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        bindTap(document);
+      });
+      htmx.onLoad(function (fragment) {
+        bindTap(fragment);
+      });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+{% if matches %}
+<div id="counter">第 {{ idx+1 }} / {{ matches|length }} 場</div>
+
+<div class="teams" id="teams">
+  {% set m = matches[idx] %}
+  <div class="team">
+    <div class="players">
+      {% for p in m.left %}<span class="badge">{{ p }}</span>{% endfor %}
+    </div>
+    <button
+      class="vs swap-btn"
+      hx-post="/swap"
+      hx-target="#stage"
+      hx-swap="innerHTML"
+      aria-label="換邊（包含分數）"
+      title="換邊（包含分數）"
+    >
+      VS
+    </button>
+
+    <div class="players">
+      {% for p in m.right %}<span class="badge">{{ p }}</span>{% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="scoreboard">
+  {% set sc = scores.get(idx|string, {"l":0,"r":0}) %}
+
+  <div class="score">
+    <div class="value tap-score" data-team="left" title="點左半減、右半加">
+      {{ sc.l }}
+    </div>
+  </div>
+
+  <div class="row" style="flex-direction: column">
+    <button
+      class="btn"
+      hx-post="/nav"
+      hx-vals='{"action":"prev"}'
+      hx-target="#stage"
+      hx-swap="innerHTML"
+    >
+      ← 上一場
+    </button>
+    <button
+      class="btn danger"
+      hx-post="/score"
+      hx-vals='{"which":"reset"}'
+      hx-target="#stage"
+      hx-swap="innerHTML"
+    >
+      重置比分
+    </button>
+    <button
+      class="btn"
+      hx-post="/nav"
+      hx-vals='{"action":"next"}'
+      hx-target="#stage"
+      hx-swap="innerHTML"
+    >
+      下一場 →
+    </button>
+  </div>
+
+  <div class="score">
+    <div class="value tap-score" data-team="right" title="點左半減、右半加">
+      {{ sc.r }}
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="counter">尚未產生賽程</div>
+<div class="teams" id="teams"></div>
+{% endif %}
