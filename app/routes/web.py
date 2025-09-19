@@ -63,7 +63,8 @@ def generate():
 
     # ✅ 讓 HTMX 直接跳到 /list（清單）
     resp = make_response("", 204)
-    resp.headers["HX-Redirect"] = url_for("web.list_page")
+    resp.headers["HX-Redirect"] = "/badminton-scoreboard" + url_for("web.list_page")
+    # resp.headers["HX-Redirect"] = url_for("web.list_page")
     return resp
 
 
