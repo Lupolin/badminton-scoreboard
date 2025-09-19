@@ -2,18 +2,10 @@
 
 <div class="app grid">
   {# 舞台：只有 score 模式顯示；其它模式先放一個隱藏區，方便 HTMX 更新 #}
-  <section
-    class="card left"
-    {%
-    if
-    mode
-    !="score"
-    %}style="display:none"
-    {%
-    endif
-    %}
-  >
-    <header><h2>賽程舞台</h2></header>
+  <section class="card left" {% if mode !="score" %}style="display:none" {% endif %}>
+    <header>
+      <h2>賽程舞台</h2>
+    </header>
     <div class="body">
       <div id="stage" class="stage">
         {% if mode=='score' %}{% include "_stage.html" %}{% endif %}
@@ -24,7 +16,9 @@
   <div id="stage" style="display: none"></div>
   {% endif %} {# 右側變單欄：名單 或 清單 #}
   <section class="card right">
-    <header><h2>名單 / 清單</h2></header>
+    <header>
+      <h2>名單 / 清單</h2>
+    </header>
     <div class="body" id="panel">
       {% if mode == 'list' %}
       <div class="section">
@@ -45,19 +39,7 @@
           <div class="chips">
             {% for n in roster %}
             <label class="chip">
-              <input
-                type="checkbox"
-                name="names"
-                value="{{ n }}"
-                {%
-                if
-                n
-                in
-                checked
-                %}checked{%
-                endif
-                %}
-              />
+              <input type="checkbox" name="names" value="{{ n }}" {% if n in checked %}checked{% endif %} />
               {{ n }}
             </label>
             {% endfor %}
@@ -65,11 +47,7 @@
         </form>
         <div class="row" style="margin-top: 8px">
           <!-- 直接導向 /score：產生完自動進入計分頁 -->
-          <button
-            class="btn primary"
-            hx-post="/generate"
-            hx-include="#rosterForm"
-          >
+          <button class="btn primary" hx-post="/badminton-scoreboard/generate" hx-include="#rosterForm">
             產生賽程（套用規則）
           </button>
         </div>
