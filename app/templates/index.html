@@ -14,7 +14,9 @@
   </section>
   {% if mode != 'score' %}
   <div id="stage" style="display: none"></div>
-  {% endif %} {# 右側變單欄：名單 或 清單 #}
+  {% endif %}
+
+  {# 右側變單欄：名單 或 清單 #}
   <section class="card right">
     <header>
       <h2>名單 / 清單</h2>
@@ -47,7 +49,7 @@
         </form>
         <div class="row" style="margin-top: 8px">
           <!-- 直接導向 /score：產生完自動進入計分頁 -->
-          <button class="btn primary" hx-post="/generate" hx-include="#rosterForm">
+          <button class="btn primary" hx-post="{{ url_for('web.generate') }}" hx-include="#rosterForm">
             產生賽程（套用規則）
           </button>
         </div>

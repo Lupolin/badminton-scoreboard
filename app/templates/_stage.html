@@ -7,14 +7,8 @@
     <div class="players">
       {% for p in m.left %}<span class="badge">{{ p }}</span>{% endfor %}
     </div>
-    <button
-      class="vs swap-btn"
-      hx-post="/swap"
-      hx-target="#stage"
-      hx-swap="innerHTML"
-      aria-label="換邊（包含分數）"
-      title="換邊（包含分數）"
-    >
+    <button class="vs swap-btn" hx-post="{{ url_for('web.swap') }}" hx-target="#stage" hx-swap="innerHTML"
+      aria-label="換邊（包含分數）" title="換邊（包含分數）">
       VS
     </button>
 
@@ -34,31 +28,16 @@
   </div>
 
   <div class="row" style="flex-direction: column">
-    <button
-      class="btn"
-      hx-post="/nav"
-      hx-vals='{"action":"prev"}'
-      hx-target="#stage"
-      hx-swap="innerHTML"
-    >
+    <button class="btn" hx-post="{{ url_for('web.nav') }}" hx-vals='{"action":"prev"}' hx-target="#stage"
+      hx-swap="innerHTML">
       ← 上一場
     </button>
-    <button
-      class="btn danger"
-      hx-post="/score"
-      hx-vals='{"which":"reset"}'
-      hx-target="#stage"
-      hx-swap="innerHTML"
-    >
+    <button class="btn danger" hx-post="{{ url_for('web.score') }}" hx-vals='{"which":"reset"}' hx-target="#stage"
+      hx-swap="innerHTML">
       重置比分
     </button>
-    <button
-      class="btn"
-      hx-post="/nav"
-      hx-vals='{"action":"next"}'
-      hx-target="#stage"
-      hx-swap="innerHTML"
-    >
+    <button class="btn" hx-post="{{ url_for('web.nav') }}" hx-vals='{"action":"next"}' hx-target="#stage"
+      hx-swap="innerHTML">
       下一場 →
     </button>
   </div>

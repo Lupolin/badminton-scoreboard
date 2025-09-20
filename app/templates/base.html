@@ -15,15 +15,16 @@
 
   <!-- 手機底部分頁：只顯示「另外兩個」 -->
   <nav class="mobile-tabs" id="mobile-tabs">
-    {% set m = mode or 'setup' %} {% if m == 'setup' %}
-    <a href="/list">清單</a>
-    <a href="/score">計分</a>
+    {% set m = mode or 'setup' %}
+    {% if m == 'setup' %}
+    <a href="{{ url_for('web.list_page') }}">清單</a>
+    <a href="{{ url_for('web.score_page') }}">計分</a>
     {% elif m == 'list' %}
-    <a href="/">名單</a>
-    <a href="/score">計分</a>
+    <a href="{{ url_for('web.index') }}">名單</a>
+    <a href="{{ url_for('web.score_page') }}">計分</a>
     {% else %}
-    <a href="/">名單</a>
-    <a href="/list">清單</a>
+    <a href="{{ url_for('web.index') }}">名單</a>
+    <a href="{{ url_for('web.list_page') }}">清單</a>
     {% endif %}
   </nav>
 
@@ -44,7 +45,7 @@
                   0) - rect.left;
               const side = x < rect.width / 2 ? "minus" : "plus";
               const which = `${el.dataset.team}_${side}`; // left_minus/right_plus...
-              htmx.ajax("POST", "/score", {
+              htmx.ajax("POST", "{{ url_for('web.score') }}", {
                 values: { which },
                 target: "#stage",
                 swap: "innerHTML",

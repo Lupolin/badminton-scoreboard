@@ -61,12 +61,9 @@ def generate():
     session["idx"] = 0
     session["scores"] = {}
 
-    # ✅ 讓 HTMX 直接跳到 /list（清單）
     resp = make_response("", 204)
-    resp.headers["HX-Redirect"] = "/badminton-scoreboard" + url_for("web.list_page")
-    # resp.headers["HX-Redirect"] = url_for("web.list_page")
+    resp.headers["HX-Redirect"] = url_for("web.list_page")
     return resp
-
 
 # 切換場次（只更新舞台）
 @web_bp.post("/nav")
