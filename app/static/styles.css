@@ -8,17 +8,20 @@
   --danger: #ff6b6b;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --radius: 18px;
-  --tabs-h: 56px; /* 手機底部分頁高度 */
+  --tabs-h: 56px;
+  /* 手機底部分頁高度 */
 }
 
 /* Base */
 * {
   box-sizing: border-box;
 }
+
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   background: linear-gradient(180deg, #0b0f14, #0f1520);
@@ -30,9 +33,11 @@ body {
   justify-content: center;
   padding: 18px;
 }
+
 .app {
   width: 100%;
 }
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -45,6 +50,7 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
+
 .card header {
   display: flex;
   align-items: center;
@@ -52,16 +58,19 @@ body {
   padding: 14px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
+
 .card header h2 {
   margin: 0;
   font-size: 18px;
   letter-spacing: 0.5px;
   color: #cfe5ff;
 }
+
 .card .body {
   padding: 14px;
 }
 
+/* Buttons */
 .btn {
   cursor: pointer;
   background: linear-gradient(180deg, #1a2533, #152031);
@@ -72,14 +81,17 @@ body {
   font-weight: 700;
   letter-spacing: 0.3px;
 }
+
 .btn.primary {
   background: linear-gradient(180deg, #1d3247, #18293d);
   border-color: rgba(92, 200, 255, 0.5);
 }
+
 .btn.secondary {
   background: linear-gradient(180deg, #1a2c24, #16251f);
   border-color: rgba(138, 255, 204, 0.4);
 }
+
 .btn.danger {
   background: linear-gradient(180deg, #3a1d22, #2a1619);
   border-color: rgba(255, 107, 107, 0.4);
@@ -91,16 +103,30 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: calc(env(safe-area-inset-top, 0px) + 34px) 16px 20px;
+  justify-content: flex-start;
+  /* 從上方開始排列 */
+  gap: 10px;
   text-align: center;
+  margin: 0;
+  /* 移除上下 margin */
+  padding: calc(env(safe-area-inset-top, 0px) + 6px) 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
 }
+
+#counter {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+  opacity: 0.9;
+}
+
 .teams {
   display: grid;
   gap: 12px;
   width: 100%;
 }
+
 .team {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -111,6 +137,7 @@ body {
   border-radius: 16px;
   padding: 12px;
 }
+
 .players {
   display: flex;
   gap: 6px;
@@ -118,6 +145,7 @@ body {
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .badge {
   padding: 8px 10px;
   border-radius: 999px;
@@ -125,6 +153,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-weight: 800;
 }
+
 .vs {
   font-weight: 900;
   color: #a9c7ff;
@@ -133,7 +162,7 @@ body {
   border: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
-/* Scoreboard：左右分數整塊可點（左藍右紅、字白） */
+/* Scoreboard */
 .scoreboard {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -147,12 +176,14 @@ body {
   border-radius: 16px;
   background: linear-gradient(180deg, #121a26, #0e1621);
 }
+
 .score {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
+
 .score .value {
   display: flex;
   align-items: center;
@@ -173,24 +204,25 @@ body {
   line-height: 1;
   padding: 0;
 }
+
 .value.tap-score[data-team="left"] {
   background: linear-gradient(180deg, #1c2f57, #162949);
   border-color: rgba(92, 200, 255, 0.45);
 }
+
 .value.tap-score[data-team="right"] {
   background: linear-gradient(180deg, #5a1f23, #3f171a);
   border-color: rgba(255, 107, 107, 0.45);
 }
-.tap-score::after {
-  display: none !important;
-} /* 若先前有中線 pseudo，確保關閉 */
 
+/* Layout Helpers */
 .row {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
 }
+
 .section {
   display: flex;
   flex-direction: column;
@@ -200,11 +232,13 @@ body {
   border-radius: 14px;
   background: #0b121b;
 }
+
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .chip {
   display: inline-flex;
   gap: 8px;
@@ -214,10 +248,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #0f1722;
 }
+
 .hint {
   font-size: 12px;
   color: #9fb1c1;
 }
+
 .tag {
   padding: 2px 8px;
   border-radius: 999px;
@@ -227,7 +263,7 @@ body {
   color: #cfe5ff;
 }
 
-/* 手機底部分頁（計分頁也顯示） */
+/* Mobile Tabs */
 .mobile-tabs {
   position: fixed;
   left: 0;
@@ -240,6 +276,7 @@ body {
   align-items: center;
   z-index: 1000;
 }
+
 .mobile-tabs a {
   text-decoration: none;
   font-weight: 800;
@@ -249,48 +286,57 @@ body {
   background: #0f1722;
   color: #cfe5ff;
 }
+
 .mobile-tabs a.active {
   outline: 2px solid rgba(92, 200, 255, 0.5);
 }
 
-/* 計分視圖：全螢幕不可捲動，並預留底部分頁高度 */
+/* Score Mode */
 body.score-mode {
   padding: 0;
   overflow: hidden;
   overscroll-behavior: none;
 }
+
 body.score-mode .grid {
   grid-template-columns: 1fr !important;
 }
+
 body.score-mode .card.right {
   display: none !important;
 }
+
 body.score-mode .card.left {
   border-radius: 0;
+  margin: 0;
+  /* 移除外層 margin */
   height: calc(100svh - var(--tabs-h) - env(safe-area-inset-bottom, 0));
 }
+
 @supports not (height: 100svh) {
   body.score-mode .card.left {
     height: calc(100dvh - var(--tabs-h) - env(safe-area-inset-bottom, 0));
   }
 }
-body.score-mode .card.left > .body {
+
+body.score-mode .card.left>.body {
   height: 100%;
   display: flex;
 }
+
 body.score-mode #stage.stage {
   flex: 1;
   height: 100%;
-  padding: calc(env(safe-area-inset-top, 0) + 10px) 12px
-    calc(env(safe-area-inset-bottom, 0) + 12px);
+  padding: calc(env(safe-area-inset-top, 0) + 6px) 12px calc(env(safe-area-inset-bottom, 0) + 8px);
   overflow: hidden;
 }
+
 body.score-mode .score .value {
   font-size: clamp(100px, 28vmin, 360px);
   min-height: clamp(180px, 45vmin, 520px);
 }
 
-/* VS 按鈕化（換邊） */
+/* VS Button */
 .vs.swap-btn {
   cursor: pointer;
   transition: transform 0.06s ease, box-shadow 0.12s ease;
@@ -298,7 +344,13 @@ body.score-mode .score .value {
   padding: 8px 14px;
   border: 1px dashed rgba(255, 255, 255, 0.25);
 }
+
 .vs.swap-btn:active {
   transform: scale(0.97);
   box-shadow: 0 0 0 2px rgba(92, 200, 255, 0.25) inset;
+}
+
+/* 移除左側舞台卡片的多餘 padding */
+.card.left .body.no-header {
+  padding: 0;
 }

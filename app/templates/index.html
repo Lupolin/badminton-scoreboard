@@ -3,10 +3,7 @@
 <div class="app grid">
   {# 舞台：只有 score 模式顯示；其它模式先放一個隱藏區，方便 HTMX 更新 #}
   <section class="card left" {% if mode !="score" %}style="display:none" {% endif %}>
-    <header>
-      <h2>賽程舞台</h2>
-    </header>
-    <div class="body">
+    <div class="body no-header">
       <div id="stage" class="stage">
         {% if mode=='score' %}{% include "_stage.html" %}{% endif %}
       </div>
